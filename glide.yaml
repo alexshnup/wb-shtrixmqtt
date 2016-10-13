@@ -1,0 +1,9 @@
+package: github.com/alexshnup/wb-shtrixmqtt
+import:
+- package: github.com/alexshnup/go-config-manager/yaml
+- package: github.com/alexshnup/mqtt
+- package: github.com/alexshnup/yaml.v2
+- package: github.com/alexshnup/uuid
+- package: golang.org/x/net/websocket
+- package: golang.org/x/text/encoding/charmap
+- package: github.com/sigurn/crc8
