@@ -26,9 +26,10 @@ _testmain.go
 # Tern port file
 .tern-port
 
-/wb-shtrixmqtt
+#/wb-shtrixmqtt
 
 vendor
 
 debian/files
 debian/wb-shtrixmqtt*
+
