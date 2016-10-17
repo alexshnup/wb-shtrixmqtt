@@ -1,0 +1,32 @@
+hash: 11fcd6f46cf7309fd71b999acc6a6b8a87ffc9d7ac20d759d2bb41e432a78d1c
+updated: 2016-10-13T11:36:53.739192396Z
+imports:
+- name: github.com/alexshnup/go-config-manager
+  version: 510732f0c5058b2aeaa1357c1d9f107c67f3a591
+  subpackages:
+  - yaml
+- name: github.com/alexshnup/mqtt
+  version: 97581720592f03746b298457bd91409451d8310b
+  subpackages:
+  - packets
+- name: github.com/alexshnup/uuid
+  version: b984ec7fa9ff9e428bd0cf0abf429384dfbe3e37
+- name: github.com/alexshnup/yaml.v2
+  version: 2de08218577fe80341ac6ff5295507d42ea557b8
+- name: github.com/sigurn/crc8
+  version: e55481d6f45c5a8f040343bace9013571dae103e
+- name: github.com/sigurn/utils
+  version: f19e41f79f8f006116f682c1af454591bc278ad4
+- name: golang.org/x/net
+  version: 749a502dd1eaf3e5bfd4f8956748c502357c0bbe
+  subpackages:
+  - websocket
+- name: golang.org/x/text
+  version: c745997bb18563e8788428768ce0f034f2b663df
+  subpackages:
+  - encoding/charmap
+  - encoding
+  - encoding/internal
+  - encoding/internal/identifier
+  - transform
+devImports: []
