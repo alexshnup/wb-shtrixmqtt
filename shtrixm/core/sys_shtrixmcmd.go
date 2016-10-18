@@ -216,13 +216,13 @@ func (l *shtrixmcmd) shtrixmcmdMessageHandler(client mqtt.Client, msg mqtt.Messa
 			// l.reply = ShtrixmcmdOnOff(uint8(device_id), uint8(shtrixmcmd_id), 0)
 			l.reply = string(SendCmd([]byte{0x01}, string(s_fields[0])))
 			log.Println("l.reply", l.reply)
-			l.PublishReply(0, s_fields[0], s_fields[1])
+			l.PublishReply(0, s_fields[0], "reply")
 		case "params":
 			log.Printf("params______0______%v %v", s_fields[0], s_fields[1])
 			// l.reply = ShtrixmcmdOnOff(uint8(device_id), uint8(shtrixmcmd_id), 0)
 			l.reply = string(SendCmd([]byte{0x02}, string(s_fields[0])))
 			log.Println("l.reply", l.reply)
-			l.PublishReply(0, s_fields[0], s_fields[1])
+			l.PublishReply(0, s_fields[0], "reply")
 		}
 
 	case "allow":
