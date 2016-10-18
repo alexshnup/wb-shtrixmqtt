@@ -108,10 +108,9 @@ func (l *shtrixmcmd) PublishStatus(qos byte, deviceID, shtrixmcmdID string) {
 
 func (l *shtrixmcmd) PublishReply(qos byte, deviceID, shtrixmcmdID string) {
 
-	topic := l.topic + "/" + deviceID + "/" + shtrixmcmdID + "/devicetype"
-
+	topic := l.topic + "/" + deviceID + "/" + shtrixmcmdID
 	// publish result
-	if token := l.client.Publish(topic, qos, false, l.reply); token.Wait() && token.Error() != nil {
+	if token := l.client.Publish(topic, qos, false, fmt.Sprintf("%X", l.reply)); token.Wait() && token.Error() != nil {
 		log.Println(token.Error())
 	}
 
@@ -229,12 +228,21 @@ func (l *shtrixmcmd) shtrixmcmdMessageHandler(client mqtt.Client, msg mqtt.Messa
 
 	case "allow":
 		log.Printf("allow______0______%v %v %v", s_fields[0], s_fields[1], string(msg.Payload()))
+		//scanned number
+		txt := string(s_fields[1])
+		txt = strings.Replace(txt, " ", "", -1)
+		txt = strings.Trim(txt, "\n")
+
+		strHexByte, err := hex.DecodeString(txt)
+		CheckError(err)
 		// // l.reply = ShtrixmcmdOnOff(uint8(device_id), uint8(shtrixmcmd_id), 0)
 		// l.reply = string(SendCmd([]byte{0x01}, string(s_fields[0])))
 		// log.Println("l.reply", l.reply)
 		// l.PublishDeviceType(0, s_fields[0], s_fields[1])
 
 		cmd := []byte{0x73, 0x77}
+		//cmd = append(cmd, p[10:n-5]...)
+		cmd = append(cmd, strHexByte...)
 		//AccessAllow
 		cmdEndOK := []byte{0x05, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00}
 

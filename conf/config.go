@@ -43,5 +43,6 @@ var Config ConfigRoot
 func init() {
 	// Config manager
 	err := yamlCfg.NewConfig("wb-shtrixmqtt-conf.yaml").Load(&Config)
+	err = yamlCfg.NewConfig("/etc/wb-shtrixmqtt-conf.yaml").Load(&Config)
 	checkError(err)
 }

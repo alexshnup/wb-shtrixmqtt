@@ -277,7 +277,7 @@ func (l *shtrixmcmd) SrvMain() {
 			cmd = []byte{0x70, 0x00}
 			SendResponse(ser, remoteaddr, msgId, addr1, addr2, cmd)
 
-			l.PublishPayload(0, CropIpAddr(remoteaddr.String())+"/"+fmt.Sprintf("%X", p[9:17])+"/inquiry/", fmt.Sprintf("%X", p[10:n-5]))
+			l.PublishPayload(0, CropIpAddr(remoteaddr.String())+"/inquiry/", fmt.Sprintf("%X", p[10:n-5]))
 
 			//p[10:n-5]
 		}
