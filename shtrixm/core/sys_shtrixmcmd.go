@@ -1,6 +1,7 @@
 package syscore
 
 import (
+	"encoding/hex"
 	"fmt"
 	"io/ioutil"
 	"log"
@@ -180,33 +181,20 @@ func (l *shtrixmcmd) shtrixmcmdMessageHandler(client mqtt.Client, msg mqtt.Messa
 	fmt.Printf("\n sfields %v len-sfields %v \n", s_fields, len(s_fields))
 
 	switch s_fields[len(s_fields)-1] {
-	case "on":
-		// receive message and DO
+	case "set":
 		switch string(msg.Payload()) {
-		case "0":
-			// logic when OFF
-			log.Printf("______0______%v %v", s_fields[0], s_fields[1])
+		case "open":
+			log.Printf("open______0______%v %v", s_fields[0], s_fields[1])
 			// l.reply = ShtrixmcmdOnOff(uint8(device_id), uint8(shtrixmcmd_id), 0)
-			l.reply = string(SendCmd([]byte{0x01}, string(s_fields[0])))
+			l.reply = string(SendCmd([]byte{0x80, 0x02}, string(s_fields[0])))
 			log.Println("l.reply", l.reply)
-
-			l.PublishStatus(0, s_fields[0], s_fields[1])
-		case "1":
-			// logic when ON
-			log.Printf("%v %v", device_id, shtrixmcmd_id)
-
-			// l.reply = ShtrixmcmdOnOff(uint8(device_id), uint8(shtrixmcmd_id), 1)
-			l.reply = string(SendCmd([]byte{0x01}, string(s_fields[0])))
+			l.PublishReply(0, s_fields[0], "reply")
+		case "close":
+			log.Printf("close______0______%v %v", s_fields[0], s_fields[1])
+			// l.reply = ShtrixmcmdOnOff(uint8(device_id), uint8(shtrixmcmd_id), 0)
+			l.reply = string(SendCmd([]byte{0x80, 0x00}, string(s_fields[0])))
 			log.Println("l.reply", l.reply)
-			l.PublishStatus(0, s_fields[0], s_fields[1])
-		case "3":
-			// logic when ON
-
-			log.Printf("%v %v", device_id, shtrixmcmd_id)
-			// l.reply = ShtrixmcmdWhile(uint8(device_id), uint8(shtrixmcmd_id), 3)
-			l.reply = string(SendCmd([]byte{0x01}, string(s_fields[0])))
-			log.Println("l.reply", l.reply)
-			l.PublishStatus(0, s_fields[0], s_fields[1])
+			l.PublishReply(0, s_fields[0], "reply")
 		}
 
 	case "get":
@@ -224,6 +212,20 @@ func (l *shtrixmcmd) shtrixmcmdMessageHandler(client mqtt.Client, msg mqtt.Messa
 			log.Println("l.reply", l.reply)
 			l.PublishReply(0, s_fields[0], "reply")
 		}
+
+	case "cmd":
+		text2 := string(msg.Payload())
+		text2 = strings.Replace(text2, " ", "", -1)
+		text2 = strings.Trim(text2, "\n")
+
+		strHexByte, err := hex.DecodeString(text2)
+		CheckError(err)
+
+		log.Printf("cmd______0______%v %v", s_fields[0], s_fields[1])
+		// l.reply = ShtrixmcmdOnOff(uint8(device_id), uint8(shtrixmcmd_id), 0)
+		l.reply = string(SendCmd(strHexByte, string(s_fields[0])))
+		log.Println("l.reply", l.reply)
+		l.PublishReply(0, s_fields[0], "reply_cmd")
 
 	case "allow":
 		log.Printf("allow______0______%v %v %v", s_fields[0], s_fields[1], string(msg.Payload()))
