@@ -1,6 +1,7 @@
 package syscore
 
 import (
+	"fmt"
 	"io/ioutil"
 	"log"
 	"strconv"
@@ -161,7 +162,9 @@ func (l *shtrixmcmd) shtrixmcmdMessageHandler(client mqtt.Client, msg mqtt.Messa
 	device_id, _ := strconv.ParseUint(s_fields[0], 10, 64)
 	shtrixmcmd_id, _ := strconv.ParseUint(s_fields[1], 10, 64)
 
-	switch s_fields[len(s_fields)] {
+	fmt.Printf(" len-sfields %v", len(s_fields))
+
+	switch s_fields[len(s_fields)-1] {
 	case "on":
 		// receive message and DO
 		switch string(msg.Payload()) {

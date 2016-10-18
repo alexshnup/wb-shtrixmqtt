@@ -3,7 +3,7 @@
 # Provides:          wb-shtrixmqtt
 # Default-Start:     2 3 4 5
 # Default-Stop:      0 1 6
-# Required-Start:
+# Required-Start:    $all
 # Required-Stop:
 # Short-Description: Car Meshure Engine for Wiren Board
 # Description:       Car Meshure Engine for Wiren Board
@@ -18,7 +18,7 @@
 
 # PATH should only include /usr/* if it runs after the mountnfs.sh script
 PATH=/sbin:/usr/sbin:/bin:/usr/bin
-DESC="MQTT Bolid GW"
+DESC="MQTT Shtrix-M GW"
 NAME=wb-shtrixmqtt
 DAEMON=/usr/bin/$NAME
 CONFIG_FILE="/etc/wb-shtrixmqtt-conf.yaml"
