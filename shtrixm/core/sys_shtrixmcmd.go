@@ -162,7 +162,7 @@ func (l *shtrixmcmd) shtrixmcmdMessageHandler(client mqtt.Client, msg mqtt.Messa
 	device_id, _ := strconv.ParseUint(s_fields[0], 10, 64)
 	shtrixmcmd_id, _ := strconv.ParseUint(s_fields[1], 10, 64)
 
-	fmt.Printf(" len-sfields %v", len(s_fields))
+	fmt.Printf("\n sfields %v len-sfields %v \n", s_fields, len(s_fields))
 
 	switch s_fields[len(s_fields)-1] {
 	case "on":
@@ -170,7 +170,7 @@ func (l *shtrixmcmd) shtrixmcmdMessageHandler(client mqtt.Client, msg mqtt.Messa
 		switch string(msg.Payload()) {
 		case "0":
 			// logic when OFF
-			log.Printf("%v %v", device_id, shtrixmcmd_id)
+			log.Printf("______0______%v %v", device_id, shtrixmcmd_id)
 			// l.status = ShtrixmcmdOnOff(uint8(device_id), uint8(shtrixmcmd_id), 0)
 			l.status = string(SendCmd([]byte{0x01}))
 			log.Println("l.status", l.status)
