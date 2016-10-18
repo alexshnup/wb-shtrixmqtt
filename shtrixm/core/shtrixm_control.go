@@ -191,15 +191,24 @@ func SendCmd(strHexByte []byte, ip_addr string) []byte {
 		//The DeadLine set for read
 		conn.SetReadDeadline(time.Now().Add(time.Duration(timeout) * time.Millisecond))
 
+		if err != nil {
+			fmt.Printf("Some error %v", err)
+			return []byte{0x00}
+		}
+
 		n, err := bufio.NewReader(conn).Read(p)
+		if err != nil {
+			fmt.Printf("Some error %v", err)
+			return []byte{0x00}
+		}
+
 		if err == nil {
 			fmt.Printf("RX %d bytes \nstx:%+X\tmsgId:%X\tAddr:%X %X\tLen:%X\tCmd:%X\tParams:%X\tCRC8:%X\n", n, p[0], p[1], p[2], p[3], p[4], p[5], p[6:n-1], p[n])
 			// fmt.Printf("RX %d bytes %+X\n", n, p[:n])
 			icount = i
 			return p[:n]
-		} else {
-			fmt.Printf("Some error %v\n", err)
 		}
+
 		conn.Close()
 		// _, err = Conn.Write(bufOut)
 		// if err != nil {
