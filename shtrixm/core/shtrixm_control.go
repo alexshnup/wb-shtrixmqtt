@@ -144,7 +144,7 @@ func SendResponse(conn *net.UDPConn, addr *net.UDPAddr, msgId, addr1, addr2 byte
 	}
 }
 
-func SendCmd(strHexByte []byte) []byte {
+func SendCmd(strHexByte []byte, ip_addr string) []byte {
 	var bufOut []byte
 	for i := icount; i <= 255; i++ {
 
@@ -178,7 +178,8 @@ func SendCmd(strHexByte []byte) []byte {
 		p := make([]byte, 2048)
 		// timeout := 100
 
-		conn, err := net.Dial("udp", ServerIpPort)
+		// conn, err := net.Dial("udp", ServerIpPort)
+		conn, err := net.Dial("udp", ip_addr+":9999")
 		// conn, err := net.Dial("udp",  "192.168.3.88:9999")
 		// conn, err := net.DialTimeout("udp", "192.168.3.88:9999", time.Duration(timeout)*time.Millisecond)
 		if err != nil {

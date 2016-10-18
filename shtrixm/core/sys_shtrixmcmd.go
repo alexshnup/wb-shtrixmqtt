@@ -170,9 +170,9 @@ func (l *shtrixmcmd) shtrixmcmdMessageHandler(client mqtt.Client, msg mqtt.Messa
 		switch string(msg.Payload()) {
 		case "0":
 			// logic when OFF
-			log.Printf("______0______%v %v", device_id, shtrixmcmd_id)
+			log.Printf("______0______%v %v", s_fields[0], s_fields[1])
 			// l.status = ShtrixmcmdOnOff(uint8(device_id), uint8(shtrixmcmd_id), 0)
-			l.status = string(SendCmd([]byte{0x01}))
+			l.status = string(SendCmd([]byte{0x01}, string(s_fields[0])))
 			log.Println("l.status", l.status)
 
 			l.PublishStatus(0, s_fields[0], s_fields[1])
@@ -181,7 +181,7 @@ func (l *shtrixmcmd) shtrixmcmdMessageHandler(client mqtt.Client, msg mqtt.Messa
 			log.Printf("%v %v", device_id, shtrixmcmd_id)
 
 			// l.status = ShtrixmcmdOnOff(uint8(device_id), uint8(shtrixmcmd_id), 1)
-			l.status = string(SendCmd([]byte{0x01}))
+			l.status = string(SendCmd([]byte{0x01}, string(s_fields[0])))
 			log.Println("l.status", l.status)
 			l.PublishStatus(0, s_fields[0], s_fields[1])
 		case "3":
@@ -189,7 +189,7 @@ func (l *shtrixmcmd) shtrixmcmdMessageHandler(client mqtt.Client, msg mqtt.Messa
 
 			log.Printf("%v %v", device_id, shtrixmcmd_id)
 			// l.status = ShtrixmcmdWhile(uint8(device_id), uint8(shtrixmcmd_id), 3)
-			l.status = string(SendCmd([]byte{0x01}))
+			l.status = string(SendCmd([]byte{0x01}, string(s_fields[0])))
 			log.Println("l.status", l.status)
 			l.PublishStatus(0, s_fields[0], s_fields[1])
 		}
@@ -198,7 +198,7 @@ func (l *shtrixmcmd) shtrixmcmdMessageHandler(client mqtt.Client, msg mqtt.Messa
 		// publish status
 		// l.status = Status(uint8(device_id), uint8(shtrixmcmd_id))
 		log.Printf("%v %v", device_id, shtrixmcmd_id)
-		l.status = string(SendCmd([]byte{0x01}))
+		l.status = string(SendCmd([]byte{0x01}, string(s_fields[0])))
 		log.Println("l.status", l.status)
 		// l.PublishStatusSensor(0, s_fields[0], s_fields[1])
 
@@ -209,14 +209,14 @@ func (l *shtrixmcmd) shtrixmcmdMessageHandler(client mqtt.Client, msg mqtt.Messa
 			// publish status
 			// l.status = SetConfig(uint8(device_id), uint8(shtrixmcmd_id), 2)
 			log.Printf("%v %v", device_id, shtrixmcmd_id)
-			l.status = string(SendCmd([]byte{0x01}))
+			l.status = string(SendCmd([]byte{0x01}, string(s_fields[0])))
 			log.Println("l.status", l.status)
 			l.PublishStatus(0, s_fields[0], s_fields[1])
 		case "on":
 			// publish status
 			log.Printf("%v %v", device_id, shtrixmcmd_id)
 			// l.status = SetConfig(uint8(device_id), uint8(shtrixmcmd_id), 1)
-			l.status = string(SendCmd([]byte{0x01}))
+			l.status = string(SendCmd([]byte{0x01}, string(s_fields[0])))
 			log.Println("l.status", l.status)
 			l.PublishStatus(0, s_fields[0], s_fields[1])
 			// case "blink":
